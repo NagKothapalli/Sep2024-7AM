@@ -9,6 +9,7 @@ public class TestCases //extends ReusableComponents
 	String stdName = "Ram";
 	//public ReusableComponents   rc = new ReusableComponents(); //default constructor of RC 
 	
+	//Call the paramerized constructor
 	public ReusableComponents   rc = new ReusableComponents("edge");
 	
 	
