@@ -1,7 +1,10 @@
 package seleniumAutomation;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
@@ -95,7 +98,10 @@ public class Gmail
 		System.out.println("Test Case : Verify the Create Account Functionality");
 		int count = driver.findElements(By.className("VfPpkd-vQzf8d")).size();
 		System.out.println("Total elements count :" + count);
-		driver.findElements(By.className("VfPpkd-vQzf8d")).get(2).click();  // 0  1  2 
+		//driver.findElements(By.className("VfPpkd-vQzf8d")).get(2).click();  // 0  1  2 
+		List<WebElement> myElements = driver.findElements(By.className("VfPpkd-vQzf8d"));
+		WebElement element = myElements.get(2);
+		element.click();
 	}
 	
 	
