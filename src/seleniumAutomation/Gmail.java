@@ -167,7 +167,7 @@ public class Gmail
 	
 	//WebDriver : ChromeDriver : get(),getWindowHandle(),getTitle(),getCurrentUrl(),findElement(),findElements(),
 	
-	//By : id , name , class , tagName , linkText , partialLinkText , xpath , cssSelector
+	//By : id , name , class , tagName , linkText , partialLinkText , xpath , cssSelector  - Locators / Selectors in selenium
 	
 	//WebElement : click(),clear(),sendKeys(),isDisplayed(),isEnabled(),getText() , getTagName , getClassName , getAttribute ,findElement(),findElements()
 	
@@ -178,6 +178,38 @@ public class Gmail
 		//driver.findElement(By.linkText("Learn more about using Guest mode")).click();
 		driver.findElement(By.partialLinkText("Learn more about using")).click();
 	}
+	
+	//XPATH - Absolute Xpath : XML path
+	@Test
+	public void absoluteXpath()
+	{
+	   //    	/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div[1]/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input
+		driver.findElement(By.xpath("/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div[1]/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input")).click();
+		driver.findElement(By.xpath("/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div[1]/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input")).sendKeys("dsgdfdg@gmail.com");
+		driver.findElement(By.xpath("/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div[1]/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input")).clear();
+		driver.findElement(By.xpath("/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div[1]/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input")).sendKeys("nag022@gmail.com");
+		
+		String emailObj = "/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div[1]/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input";
+		String name = "Ram";
+		
+		driver.findElement(By.xpath(emailObj)).click();
+		driver.findElement(By.xpath(emailObj)).sendKeys("jkdsfdsjkdkjfgjg");
+		driver.findElement(By.xpath(emailObj)).clear();
+		driver.findElement(By.xpath(emailObj)).sendKeys("nag022@gmail.com");
+	}
+	
+	//XPATH : Relative xpath : Its like select SQL query .    :   select empSalary from Employee where EmpName = Nag and EmpID=1234
+	
+	//tagName[@attribute = 'value']        
+	@Test
+	public void relativeXpath()
+	{
+		driver.findElement(By.xpath("//input[@name='identifier']")).sendKeys("ng022@gmail.com");
+	}
+	
+	
+	//tagName[@attribute = 'value'  and @attribute2 = 'value']]  
+	
 	
 	
 	
