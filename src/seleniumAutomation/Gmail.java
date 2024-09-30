@@ -106,20 +106,20 @@ public class Gmail
 		int count = driver.findElements(By.className("VfPpkd-vQzf8d")).size();
 		System.out.println("Total elements count :" + count);
 		//driver.findElements(By.className("VfPpkd-vQzf8d")).get(2).click();  // 0  1  2 
-		List<WebElement> elements = driver.findElements(By.className("VfPpkd-vQzf8d"));
+		
+		driver.findElement(By.xpath("//span[@class='VfPpkd-vQzf8d' and  text()='Create account']")).click();
+		
+		//List<WebElement> elements = driver.findElements(By.className("VfPpkd-vQzf8d"));
 		//WebElement element = elements.get(2);
 		//element.click();
 		
-		for(int i=0;i<elements.size();i++)  // i=0
-		{
-			String text = elements.get(i).getText();  // i th
-			if(text.equals("Create account"))
-			{
-				 elements.get(i).click();
-				 break;
-			}
-			
-		}
+		/*
+		 * for(int i=0;i<elements.size();i++) // i=0 { String text =
+		 * elements.get(i).getText(); // i th if(text.equals("Create account")) {
+		 * elements.get(i).click(); break; }
+		 * 
+		 * }
+		 */
 		
 	}
 	
