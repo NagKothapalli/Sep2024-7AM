@@ -200,7 +200,44 @@ public class Gmail
 	
 	//XPATH : Relative xpath : Its like select SQL query .    :   select empSalary from Employee where EmpName = Nag and EmpID=1234
 	
-	//tagName[@attribute = 'value']        
+	//tagName[@attribute = 'value'] 
+	
+	//tagName[text() = 'value']
+	
+	//tagName[@attribute1 = 'value'  and @attribute2 = 'value']]  
+	
+	//tagName[@attribute = 'value'  and text() = 'value']]  
+	
+	//tagName[@attribute1 = 'green'  or  @attribute2 = 'red']]
+	
+	//tagName[@attribute = 'value'  or text() = 'value']]  
+	
+	
+	    //tagName[contains(@attribute , 'value')] 
+	
+		//tagName[contains(text() , 'value')]
+		
+		//tagName[contains(@attribute1 , 'value')  and @attribute2 = 'value']]  
+		
+		//tagName[@attribute = 'value'  and contains(text() , 'value')]  
+		
+		//tagName[@attribute1 = 'green'  or  contains(@attribute2 , 'red')]
+		
+		//tagName[contains(@attribute , 'value')  or text() = 'value'] 
+	
+	
+	    //*[@attribute = 'value'] 
+	
+		//*[text() = 'value']
+		
+		//*[@attribute1 = 'value'  and @attribute2 = 'value']]  
+		
+		//*[@attribute = 'value'  and text() = 'value']]  
+		
+		//*[@attribute1 = 'green'  or  @attribute2 = 'red']]
+		
+		//*[@attribute = 'value'  or text() = 'value']] 
+	
 	@Test
 	public void relativeXpath()
 	{
@@ -208,7 +245,7 @@ public class Gmail
 	}
 	
 	
-	//tagName[@attribute = 'value'  and @attribute2 = 'value']]  
+	
 	
 	
 	
