@@ -6,17 +6,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ApsrtcAutomation 
 {	
 	ChromeDriver driver;  //null
 	String name;  // null
+	WebDriverWait wait;
 	public ApsrtcAutomation() 
 	{
 		driver = new ChromeDriver(); //session ID = 1234
 		name = "Ram";
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		wait = new WebDriverWait(driver,Duration.ofSeconds(30));
 		
 	}
 	
@@ -27,15 +33,16 @@ public class ApsrtcAutomation
 	public void launchApsrtcApplication()
 	{
 		driver.get("https://www.apsrtconline.in/");   // null.findElement
-	}
-	
-	
+	}	
 	
 	@Test
 	public void bookBusTicket_1() throws InterruptedException
 	{
 		System.out.println("TestCase : Book a Bus Ticket");
+		//Thread.sleep(35000); // fixed / blind wait 
+		//driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		//driver.findElement(By.xpath("//input[@name='source']")).sendKeys("HYDERABAD");
+		
 		driver.findElement(By.xpath("//input[@size='22' and @name='source']")).sendKeys("HYDERABAD");
 		Thread.sleep(1000);
 		Actions  actions = new Actions(driver); //1234
@@ -108,12 +115,14 @@ public class ApsrtcAutomation
 	
 	public void clickElement(String myxpath) //abcd
 	{
-		driver.findElement(By.xpath(myxpath)).click();
+		WebElement element = driver.findElement(By.xpath(myxpath));
+		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
 	}
 	
 	public void enterText(String myxpath,String mytext)
 	{
-		driver.findElement(By.xpath(myxpath)).sendKeys(mytext);
+		WebElement element = driver.findElement(By.xpath(myxpath));
+		wait.until(ExpectedConditions.elementToBeClickable(element)).sendKeys(mytext);
 	}
 	
 	
