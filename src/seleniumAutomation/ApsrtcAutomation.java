@@ -1,6 +1,8 @@
 package seleniumAutomation;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +22,7 @@ public class ApsrtcAutomation
 	public ApsrtcAutomation() 
 	{
 		driver = new ChromeDriver(); //session ID = 1234
+		driver.manage().window().maximize();
 		name = "Ram";
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 		wait = new WebDriverWait(driver,Duration.ofSeconds(30));
@@ -27,12 +30,19 @@ public class ApsrtcAutomation
 	}
 	
 	//java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because "this.name" is null
+	
 	//java.lang.NullPointerException: Cannot invoke "org.openqa.selenium.chrome.ChromeDriver.get(String)" because "this.driver" is null
+	
+	//org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"css selector","selector":"*[name='identifier']"}
+	
+	//org.openqa.selenium.NoSuchSessionException: Session ID is null. Using WebDriver after calling quit()?
+	
+	//java.lang.IndexOutOfBoundsException: Index 2 out of bounds for length 0
 	
 	@Before  //Having before and After annotations in a java class is not mandatory . it will execute the Before annotation if any before each test method
 	public void launchApsrtcApplication()
 	{
-		driver.get("https://www.apsrtconline.in/");   // null.findElement
+		driver.get("https://www.apsrtconline.in/");   //null.get or  null.findElement -> NullPointerException
 	}	
 	
 	@Test
@@ -58,6 +68,33 @@ public class ApsrtcAutomation
 		driver.findElement(By.xpath("//input[@id='searchBtn']")).click();
 	}
 	
+	String timeTableTLNxpath = "//a[@title='TimeTable / Track']";
+	String allServicesXpath = "//a[text()='All services Time Table & Tracking']";
+	String homeTLNxpath = "//a[@title='Home']";
+	
+	//org.openqa.selenium.NoSuchSessionException: Session ID is null. Using WebDriver after calling quit()?
+	@Test
+	public void handleMultipleWindows() throws InterruptedException
+	{		
+		clickElement(timeTableTLNxpath);
+		clickElement(allServicesXpath);
+		Set<String> myset = driver.getWindowHandles();
+		ArrayList<String>  mylist = new ArrayList<String>(myset);
+		for(int i=0;i<mylist.size();i++) {
+			System.out.println(mylist.get(i));
+		}
+		System.out.println("total windows : " + mylist.size());
+		System.out.println("Title before switching :" + driver.getTitle());
+		driver.switchTo().window(mylist.get(1));
+		Thread.sleep(6000);
+		System.out.println("Title after switching :" + driver.getTitle());		
+		driver.close(); // Current active window will be closed
+		//driver.quit(); // it will close the driver instance in the task manager
+		driver.switchTo().window(mylist.get(0));
+		Thread.sleep(4000);
+		clickElement(homeTLNxpath);
+		driver.quit();
+	}
 	
 	@Test
 	public void bookBusTicket() throws InterruptedException
