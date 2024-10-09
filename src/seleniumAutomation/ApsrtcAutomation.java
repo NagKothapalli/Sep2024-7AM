@@ -1,7 +1,11 @@
 package seleniumAutomation;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Set;
 
 import org.junit.Before;
@@ -40,9 +44,10 @@ public class ApsrtcAutomation
 	//java.lang.IndexOutOfBoundsException: Index 2 out of bounds for length 0
 	
 	@Before  //Having before and After annotations in a java class is not mandatory . it will execute the Before annotation if any before each test method
-	public void launchApsrtcApplication()
+	public void launchApsrtcApplication() throws IOException
 	{
-		driver.get("https://www.apsrtconline.in/");   //null.get or  null.findElement -> NullPointerException
+		//driver.get("https://www.apsrtconline.in/");   //null.get or  null.findElement -> NullPointerException
+		driver.get(readData("URL"));
 	}	
 	
 	@Test
@@ -133,14 +138,63 @@ public class ApsrtcAutomation
 	public void bookBusTicket_3() throws InterruptedException
 	{
 		System.out.println("TestCase : Book a Bus Ticket");		
-		enterText(fromCityxpath,"HYDERABAD");		
+		enterText(fromCityxpath,"HYDERABAD");	// Hard coded test data 	
 		clickEnter();
-		enterText(toCityxpath,"GUNTUR");
+		enterText(toCityxpath,"GUNTUR"); // Hard coded test data
 		clickEnter();
 		clickElement(openCalxpath);
 		clickElement(jdatexpath);
 		clickElement(searchBtnxpath);
 	}
+	
+	@Test
+	public void bookBusTicket_4() throws InterruptedException, IOException
+	{
+		System.out.println("TestCase : Book a Bus Ticket");		
+		enterText(fromCityxpath,readData("FromCity"));	//Parametrization
+		clickEnter();
+		enterText(toCityxpath,readData("ToCity")); 
+		clickEnter();
+		clickElement(openCalxpath);
+		clickElement(jdatexpath);
+		clickElement(searchBtnxpath);
+	}
+	
+	//*********************************************
+	
+	//java.io.FileNotFoundException: D:\WorkSpace\Java\Sep2024-7AM\MyData\Apsrtc1.properties (The system cannot find the file specified)
+	
+	//Types of exceptions : Compile Time[Checked] Exceptions and Run Time[Unchecked]  Exceptions 
+	
+	@Test
+	public void readDataFromDataSource() throws IOException
+	{
+		FileInputStream file = new FileInputStream("D:\\WorkSpace\\Java\\Sep2024-7AM\\MyData\\Apsrtc.properties"); //Like  News paper
+		Properties myprop = new Properties(); // like news reader
+		myprop.load(file);
+		String v1 = myprop.getProperty("URL");
+		System.out.println(v1);
+		
+		System.out.println(myprop.getProperty("UserName"));
+		System.out.println(myprop.getProperty("PassWord"));
+		System.out.println(myprop.getProperty("FromCity"));
+		System.out.println(myprop.getProperty("ToCity"));
+		
+	}
+	
+	public String readData(String input) throws IOException
+	{
+		FileInputStream file = new FileInputStream("D:\\WorkSpace\\Java\\Sep2024-7AM\\MyData\\Apsrtc.properties"); //Like  News paper
+		Properties myprop = new Properties(); // like news reader
+		myprop.load(file);
+		String output = myprop.getProperty(input);
+		return output;
+	}
+	
+	
+	
+	
+	//************************************************
 	
 	//Reusable function / component
 	public void clickEnter()
