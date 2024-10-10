@@ -22,15 +22,16 @@ public class ApsrtcAutomation
 {	
 	ChromeDriver driver;  //null
 	String name;  // null
-	WebDriverWait wait;
+	GeneralUtility gUtility;
+	DriverUtilities dUtilities;
 	public ApsrtcAutomation() 
 	{
 		driver = new ChromeDriver(); //session ID = 1234
 		driver.manage().window().maximize();
 		name = "Ram";
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-		wait = new WebDriverWait(driver,Duration.ofSeconds(30));
-		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));		
+		gUtility = new GeneralUtility("D:\\WorkSpace\\Java\\Sep2024-7AM\\MyData\\Apsrtc.properties");	
+		dUtilities = new DriverUtilities(driver);  //1234
 	}
 	
 	//java.lang.NullPointerException: Cannot invoke "String.equals(Object)" because "this.name" is null
@@ -47,7 +48,8 @@ public class ApsrtcAutomation
 	public void launchApsrtcApplication() throws IOException
 	{
 		//driver.get("https://www.apsrtconline.in/");   //null.get or  null.findElement -> NullPointerException
-		driver.get(readData("URL"));
+		driver.get(gUtility.readData("URL"));
+		
 	}	
 	
 	@Test
@@ -73,16 +75,14 @@ public class ApsrtcAutomation
 		driver.findElement(By.xpath("//input[@id='searchBtn']")).click();
 	}
 	
-	String timeTableTLNxpath = "//a[@title='TimeTable / Track']";
-	String allServicesXpath = "//a[text()='All services Time Table & Tracking']";
-	String homeTLNxpath = "//a[@title='Home']";
+	
 	
 	//org.openqa.selenium.NoSuchSessionException: Session ID is null. Using WebDriver after calling quit()?
 	@Test
 	public void handleMultipleWindows() throws InterruptedException
 	{		
-		clickElement(timeTableTLNxpath);
-		clickElement(allServicesXpath);
+		dUtilities.clickElement(timeTableTLNxpath);
+		dUtilities.clickElement(allServicesXpath);
 		Set<String> myset = driver.getWindowHandles();
 		ArrayList<String>  mylist = new ArrayList<String>(myset);
 		for(int i=0;i<mylist.size();i++) {
@@ -97,7 +97,7 @@ public class ApsrtcAutomation
 		//driver.quit(); // it will close the driver instance in the task manager
 		driver.switchTo().window(mylist.get(0));
 		Thread.sleep(4000);
-		clickElement(homeTLNxpath);
+		dUtilities.clickElement(homeTLNxpath);
 		driver.quit();
 	}
 	
@@ -107,9 +107,9 @@ public class ApsrtcAutomation
 		System.out.println("TestCase : Book a Bus Ticket");
 		//driver.findElement(By.xpath("//input[@name='source']")).sendKeys("HYDERABAD");
 		driver.findElement(By.xpath("//*[@size='22' and @name='source']")).sendKeys("HYDERABAD");
-		clickEnter();
+		dUtilities.clickEnter();
 		driver.findElement(By.xpath("//input[contains(@id ,'toPlaceN')]")).sendKeys("GUNTUR");
-		clickEnter();
+		dUtilities.clickEnter();
 		driver.findElement(By.xpath("//input[@id='txtJourneyDate']")).click();
 		driver.findElement(By.xpath("//a[text()='10']")).click();
 		driver.findElement(By.xpath("//input[@id='searchBtn']")).click();
@@ -119,47 +119,89 @@ public class ApsrtcAutomation
 	public void bookBusTicket_2() throws InterruptedException
 	{
 		System.out.println("TestCase : Book a Bus Ticket");		
-		enterText("//*[@size='22' and @name='source']","HYDERABAD");		
-		clickEnter();
-		enterText("//input[contains(@id ,'toPlaceN')]","GUNTUR");
-		clickEnter();
-		clickElement("//input[@id='txtJourneyDate']");
-		clickElement("//a[text()='10']");
-		clickElement("//input[@id='searchBtn']");
+		dUtilities.enterText("//*[@size='22' and @name='source']","HYDERABAD");		
+		dUtilities.clickEnter();
+		dUtilities.enterText("//input[contains(@id ,'toPlaceN')]","GUNTUR");
+		dUtilities.clickEnter();
+		dUtilities.clickElement("//input[@id='txtJourneyDate']");
+		dUtilities.clickElement("//a[text()='10']");
+		dUtilities.clickElement("//input[@id='searchBtn']");
 	}
 
+	//**************************************************************
+	
 	String fromCityxpath = "//*[@size='22' and @name='source']";
 	String toCityxpath = "//input[contains(@id ,'toPlaceN')]";
 	String openCalxpath = "//input[@id='txtJourneyDate']";
-	String jdatexpath = "//a[text()='10']";
+	String jdatexpath = "//a[text()='20']";
 	String searchBtnxpath = "//input[@id='searchBtn']";
+	String timeTableTLNxpath = "//a[@title='TimeTable / Track']";
+	String allServicesXpath = "//a[text()='All services Time Table & Tracking']";
+	String homeTLNxpath = "//a[@title='Home']";
+	
+	//*************************************************************
 	
 	@Test
 	public void bookBusTicket_3() throws InterruptedException
 	{
 		System.out.println("TestCase : Book a Bus Ticket");		
-		enterText(fromCityxpath,"HYDERABAD");	// Hard coded test data 	
-		clickEnter();
-		enterText(toCityxpath,"GUNTUR"); // Hard coded test data
-		clickEnter();
-		clickElement(openCalxpath);
-		clickElement(jdatexpath);
-		clickElement(searchBtnxpath);
+		dUtilities.enterText(fromCityxpath,"HYDERABAD");	// Hard coded test data 	
+		dUtilities.clickEnter();
+		dUtilities.enterText(toCityxpath,"GUNTUR"); // Hard coded test data
+		dUtilities.clickEnter();
+		dUtilities.clickElement(openCalxpath);
+		dUtilities.clickElement(jdatexpath);
+		dUtilities.clickElement(searchBtnxpath);
 	}
 	
 	@Test
 	public void bookBusTicket_4() throws InterruptedException, IOException
 	{
 		System.out.println("TestCase : Book a Bus Ticket");		
-		enterText(fromCityxpath,readData("FromCity"));	//Parametrization
-		clickEnter();
-		enterText(toCityxpath,readData("ToCity")); 
-		clickEnter();
-		clickElement(openCalxpath);
-		clickElement(jdatexpath);
-		clickElement(searchBtnxpath);
+		dUtilities.enterText(fromCityxpath,gUtility.readData("FromCity"));	//Parametrization
+		dUtilities.clickEnter();
+		dUtilities.enterText(toCityxpath,gUtility.readData("ToCity")); 
+		dUtilities.clickEnter();
+		dUtilities.clickElement(openCalxpath);
+		dUtilities.clickElement(jdatexpath);
+		dUtilities.clickElement(searchBtnxpath);
 	}
 	
+	@Test
+	public void bookBusTicket_5() throws InterruptedException, IOException
+	{
+		System.out.println("TestCase : Book a Bus Ticket");		
+		dUtilities.enterText(fromCityxpath,gUtility.readData("FromCity","D:\\WorkSpace\\Java\\Sep2024-7AM\\MyData\\Apsrtc.properties"));	//Parametrization
+		dUtilities.clickEnter();
+		dUtilities.enterText(toCityxpath,gUtility.readData("ToCity","D:\\WorkSpace\\Java\\Sep2024-7AM\\MyData\\Apsrtc.properties")); 
+		dUtilities.clickEnter();
+		dUtilities.clickElement(openCalxpath);
+		dUtilities.clickElement(jdatexpath);
+		dUtilities.clickElement(searchBtnxpath);
+	}
+	
+	
+	@Test
+	public void bookTicket_DataDriven() throws IOException
+	{
+		String[] fcities = gUtility.readData("FromCities").split(",");
+		String[] tcities = gUtility.readData("ToCities").split(",");
+		for(int i=0;i<fcities.length;i++) {
+			
+			System.out.println("TestCase : Book a Bus Ticket : " + (i+1));		
+			dUtilities.enterText(fromCityxpath,fcities[i]);	//Parametrization
+			dUtilities.clickEnter();
+			dUtilities.enterText(toCityxpath,tcities[i]); 
+			dUtilities.clickEnter();
+			dUtilities.clickElement(openCalxpath);
+			dUtilities.clickElement(jdatexpath);
+			dUtilities.clickElement(searchBtnxpath);
+			dUtilities.clickElement(homeTLNxpath);
+		}
+		
+		
+	}
+
 	//*********************************************
 	
 	//java.io.FileNotFoundException: D:\WorkSpace\Java\Sep2024-7AM\MyData\Apsrtc1.properties (The system cannot find the file specified)
@@ -182,14 +224,7 @@ public class ApsrtcAutomation
 		
 	}
 	
-	public String readData(String input) throws IOException
-	{
-		FileInputStream file = new FileInputStream("D:\\WorkSpace\\Java\\Sep2024-7AM\\MyData\\Apsrtc.properties"); //Like  News paper
-		Properties myprop = new Properties(); // like news reader
-		myprop.load(file);
-		String output = myprop.getProperty(input);
-		return output;
-	}
+	
 	
 	
 	
@@ -197,25 +232,7 @@ public class ApsrtcAutomation
 	//************************************************
 	
 	//Reusable function / component
-	public void clickEnter()
-	{
-		Actions  actions = new Actions(driver); //1234
-		actions.pause(Duration.ofSeconds(1)).sendKeys(Keys.ENTER).build().perform();
-	}
-	
-	
-	public void clickElement(String myxpath) //abcd
-	{
-		WebElement element = driver.findElement(By.xpath(myxpath));
-		wait.until(ExpectedConditions.elementToBeClickable(element)).click();
-	}
-	
-	public void enterText(String myxpath,String mytext)
-	{
-		WebElement element = driver.findElement(By.xpath(myxpath));
-		wait.until(ExpectedConditions.elementToBeClickable(element)).sendKeys(mytext);
-	}
-	
+		
 	
 	
 	

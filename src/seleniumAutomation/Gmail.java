@@ -31,7 +31,7 @@ public class Gmail
 		
 		//open an empty browser , call the url 
 		
-		//System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\JarFiles\\chromedriver-win64-116\\chromedriver-win64\\chromedriver.exe");
+		//System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\JarFiles\\chromedriver-win64-116\\chromedriver-win64\\chromedriver.exe"); //110
 		
 		//System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\JarFiles\\chromedriver-win64-129\\chromedriver-win64\\chromedriver.exe");
 		
