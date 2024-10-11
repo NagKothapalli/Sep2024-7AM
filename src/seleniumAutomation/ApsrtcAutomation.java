@@ -52,6 +52,34 @@ public class ApsrtcAutomation
 		
 	}	
 	
+	public void findELementMethod()
+	{
+		driver.findElement(By.xpath("//input[@id='searchBtn']")).click();
+		
+		By myby = By.xpath("//input[@id='searchBtn']");		
+		WebElement myelement = driver.findElement(myby);
+		myelement.click();
+		myelement.clear();
+		myelement.sendKeys("sdsadsa");
+		String text = myelement.getText();
+		myelement.getAttribute("tagName");
+		myelement.getAttribute("name");
+		myelement.isDisplayed();
+		myelement.isEnabled();
+		myelement.findElement(myby);
+		myelement.findElements(myby);
+		
+		
+		// driver   :  is object of class ChromeDriver
+		// findElement  : is a non static function in chromedriver class
+		// input and outputs for findelement 
+					// input :  By   [ By is a class ]
+					// We will get the object of By class from any of the 6 static methods from By class : they are name , id , className , linkText , partialLinkText , xpath
+					// All these static methods will return the object of By class
+					// output : WebElement   , 
+		// WebElement class contains functions like : click , clear , sendKeys , getText , getAttribute .....
+	}
+	
 	@Test
 	public void bookBusTicket_1() throws InterruptedException
 	{
@@ -75,7 +103,21 @@ public class ApsrtcAutomation
 		driver.findElement(By.xpath("//input[@id='searchBtn']")).click();
 	}
 	
+	//SELECT : is to select the options from the dropdown
 	
+	@Test
+	public void mouseAndKeyboardEvents()
+	{
+		WebElement fromCity = driver.findElement(By.xpath("//input[@size='22' and @name='source']"));
+		Actions  actions = new Actions(driver);
+		
+		//actions.moveToElement(fromCity).click().sendKeys("HYDERABAD").pause(Duration.ofSeconds(2)).sendKeys(Keys.ENTER).build().perform();
+		
+		actions.moveToElement(fromCity).click().sendKeys("HYDERABAD").sendKeys(Keys.ENTER).pause(Duration.ofSeconds(2)).doubleClick().pause(Duration.ofSeconds(2)).contextClick().build().perform();
+		//actions.moveToElement(fromCity).doubleClick().build().perform();
+		//actions.moveToElement(fromCity).contextClick().build().perform();
+	
+	}
 	
 	//org.openqa.selenium.NoSuchSessionException: Session ID is null. Using WebDriver after calling quit()?
 	@Test
